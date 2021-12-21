@@ -1,12 +1,24 @@
 import express from 'express';
-import dotenv from "dotenv";
+import { ApolloServer } from 'apollo-server-express';
+import "reflect-metadata";
 
-dotenv.config({})
+import { buildSchema } from 'type-graphql';
 
-const app = express();
+import { HelloResolver } from './resolvers/check';
 
-app.listen(process.env.PORT, () => {
-  console.info(`Server listening at port ${process.env.PORT}.`);
-});
+export const startServer = async () => {
+  const app = express();
 
-export default app;
+  const server = await new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [HelloResolver]
+    }),
+    context: ({req, res}) => ({req, res}),
+  });
+
+  await server.start();
+
+  server.applyMiddleware({app, path: '/api' });
+
+  return app;
+}
