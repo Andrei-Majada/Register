@@ -1,20 +1,16 @@
 import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, gql } from 'apollo-server-express';
 import "reflect-metadata";
 
-import { buildSchema } from 'type-graphql';
-
-import { HelloResolver } from './resolvers/Check';
-import { UserResolver } from './resolvers/UserResolver';
-import { RegisterTimeResolver } from './resolvers/RegisterTimeResolvers'
+import schemas from './schemas';
+import resolverMap from './resolverMap';
 
 export const startServer = async () => {
   const app = express();
 
   const server = await new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [HelloResolver, UserResolver, RegisterTimeResolver]
-    }),
+    typeDefs: schemas,
+    resolvers: resolverMap,
     context: ({req, res}) => ({req, res}),
   });
 

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, BaseEntity, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, BaseEntity, OneToMany, DeleteDateColumn } from 'typeorm';
 import { Field, ObjectType, Int } from 'type-graphql';
 import { RegisteredTime } from './RegisteredTime';
 
@@ -28,6 +28,10 @@ export class User extends BaseEntity{
   @Field()
   @CreateDateColumn({ type: 'timestamp'})
   createdAt!: string
+
+  @Field()
+  @DeleteDateColumn({ type: 'timestamp'})
+  deleteAt?: string
 
   @OneToMany(type => RegisteredTime, registeredTime => registeredTime.userId)
   registeredTime: RegisteredTime[];
