@@ -1,9 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, BaseEntity } from 'typeorm';
-import { Field, ObjectType } from 'type-graphql';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, BaseEntity, OneToMany } from 'typeorm';
+import { Field, ObjectType, Int } from 'type-graphql';
+import { RegisteredTime } from './RegisteredTime';
+
 @ObjectType()
 @Entity("user")
 export class User extends BaseEntity{
-  @Field()
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -26,4 +28,7 @@ export class User extends BaseEntity{
   @Field()
   @CreateDateColumn({ type: 'timestamp'})
   createdAt!: string
+
+  @OneToMany(type => RegisteredTime, registeredTime => registeredTime.userId)
+  registeredTime: RegisteredTime[];
 }
