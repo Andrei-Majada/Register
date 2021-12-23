@@ -1,15 +1,27 @@
 import { UserInputError } from "apollo-server-express";
+import { Request } from 'express';
+
 import { User } from "../../entities/User"
+import { verifyToken, getAuthToken } from "../../services/firebaseAuth";
 
 export interface UserShowI {
   userId: number
 }
 
-export default async function show({ userId }: UserShowI) {
+export default async function show({ userId }: UserShowI, context: { req: Request}) {
 
-  const user = await User.findOne({ id: userId });
+  const accessToken = await getAuthToken(context.req);
 
-  if (!user) throw new UserInputError('User not found.');
+  const firebaseId = await verifyToken({ accessToken });
 
-  return user;
+  const user = await User.findOne({ firebaseId });
+
+  if (!user || user.role !== "admin") throw new UserInputError('user not authorized');
+
+
+  const userResult = await User.findOne({ id: userId });
+
+  if (!userResult) throw new UserInputError('User not found.');
+
+  return userResult;
 }

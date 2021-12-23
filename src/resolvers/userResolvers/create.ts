@@ -1,5 +1,6 @@
 import { UserInputError } from "apollo-server-express";
 import { User } from "../../entities/User"
+import { createUser, getUserByEmail, verifyToken } from "../../services/firebaseAuth";
 
 export interface UserI {
   name: string
@@ -14,12 +15,20 @@ export default async function create({
   password,
   role
 }: UserI) {
-  const findUser = await User.findOne({email});
+  const findUserRepository = await User.findOne({email});
 
-  if (findUser) {
+  if (findUserRepository) {
     throw new UserInputError('This email has already been registered.');
   } else {
-    const newUser = await User.create({name, email, password, role});
+    // const findUserService = await getUserByEmail({ email });
+
+    // if (findUserService) throw new UserInputError('This email has already been registered.');
+
+    const firebaseId = await createUser({ name, email, password });
+
+    if (firebaseId === null) throw new UserInputError('Error while creating user in firebase.');
+
+    const newUser = await User.create({ name, email, password, firebaseId, role});
 
     return newUser.save();
   }

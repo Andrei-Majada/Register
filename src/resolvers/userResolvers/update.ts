@@ -1,8 +1,10 @@
 import { UserInputError } from "apollo-server-express";
+import { Request } from 'express';
+
 import { User } from "../../entities/User"
+import { verifyToken, getAuthToken } from "../../services/firebaseAuth";
 
 export interface UserUpdateI {
-  userId: number
   name?: string
   email?: string
   password?: string
@@ -10,14 +12,17 @@ export interface UserUpdateI {
 }
 
 export default async function update(
-  args: UserUpdateI,
+  args: UserUpdateI, context: { req: Request}
   ) {
+  const accessToken = await getAuthToken(context.req);
 
-  const { userId, name, email, password, role } = args;
+  const firebaseId = await verifyToken({ accessToken });
 
-  const user = await User.findOne({ id: userId });
+  const user = await User.findOne({ firebaseId });
 
-  if (!user) throw new UserInputError('User not found.');
+  if (!user) throw new UserInputError('user not found.');
+  
+  const { name, email, password, role } = args;
 
   if (name) user.name = name;
   if (email) user.email = email;

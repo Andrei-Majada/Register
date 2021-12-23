@@ -23,6 +23,10 @@ export class User extends BaseEntity{
 
   @Field(() => String)
   @Column()
+  firebaseId!: string
+
+  @Field(() => String)
+  @Column()
   role!: string
 
   @Field()

@@ -12,9 +12,7 @@ export default gql`
             userId: Int
         ): User
 
-        listAdminRegister(
-            userId: Int
-        ): [RegisteredTime]
+        listAdminRegister: [RegisteredTime]
 
         listEmployeeRegister(
             userId: Int

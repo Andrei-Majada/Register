@@ -7,6 +7,7 @@ export default gql`
         name: String
         email: String
         password: String
+        firebaseId: String
         role: String
         createdAt: String
         deleteAt: String

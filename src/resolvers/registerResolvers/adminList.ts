@@ -1,17 +1,18 @@
 import { UserInputError } from "apollo-server-express";
+import { Request } from 'express';
+
 import { User } from "../../entities/User"
+import { verifyToken, getAuthToken } from "../../services/firebaseAuth";
 import { RegisteredTime } from "../../entities/RegisteredTime";
 
-export interface RegisterAdminListI {
-  userId: number
-}
+export default async function adminList(context: { req: Request}) {
+  const accessToken = await getAuthToken(context.req);
 
-export default async function adminList({ userId }: RegisterAdminListI) {
-  const user = await User.findOne({ id: userId });
+  const firebaseId = await verifyToken({ accessToken });
 
-  if (!user) throw new UserInputError('User not found.');
+  const user = await User.findOne({ firebaseId });
 
-  if (user.role !== 'admin') throw new UserInputError('Must be and admin to see this.');
+  if (!user || user.role !== "admin") throw new UserInputError('user not authorized');
 
   const registers = await RegisteredTime.find();
 
