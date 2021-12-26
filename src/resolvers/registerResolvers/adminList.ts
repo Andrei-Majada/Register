@@ -2,7 +2,7 @@ import { UserInputError } from "apollo-server-express";
 import { Request } from 'express';
 
 import { RegisteredTime } from "../../entities/RegisteredTime";
-import { verifyToken } from "../../services/authToken";
+import { verifyToken } from "../../validators/authToken";
 
 export default async function adminList(context: { req: Request }) {
   const user = await verifyToken(context.req);
