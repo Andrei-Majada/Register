@@ -1,26 +1,19 @@
 import { UserInputError } from "apollo-server-express";
+import { Request } from 'express';
 
 import { RegisteredTime } from "../../entities/RegisteredTime"
-import { Request } from 'express';
-import { User } from "../../entities/User"
-import { verifyToken, getAuthToken } from "../../services/firebaseAuth";
+import { verifyToken } from "../../services/authToken";
 
 export interface RegisterI {
   timeRegistered: string
 }
 
 export default async function create({ timeRegistered }: RegisterI, context: { req: Request }) {
-  const accessToken = await getAuthToken(context.req);
-
-  const firebaseId = await verifyToken({ accessToken });
-
-  const user = await User.findOne({ firebaseId });
+  const user = await verifyToken(context.req);
 
   if (!user || user.role !== "employee") throw new UserInputError('user not authorized');
 
-  const userId = Number(user.id);
-
-  const newRegister = await RegisteredTime.create({ userId, timeRegistered });
+  const newRegister = await RegisteredTime.create({ userId: user.id, timeRegistered });
 
   return newRegister.save();
 }

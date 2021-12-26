@@ -6,17 +6,14 @@ export default gql`
 
         hello: Boolean
 
-        listUsers: [User]
-        
-        showUser(
-            userId: Int
-        ): User
+        login(
+            email: String
+            password: String
+        ): Login
 
         listAdminRegister: [RegisteredTime]
 
-        listEmployeeRegister(
-            userId: Int
-        ): [RegisteredTime]
+        listEmployeeRegister: [RegisteredTime]
 
     }
 `;

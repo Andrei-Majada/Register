@@ -7,7 +7,6 @@ export default gql`
         name: String
         email: String
         password: String
-        firebaseId: String
         role: String
         createdAt: String
         deleteAt: String
@@ -17,6 +16,13 @@ export default gql`
         id: ID
         userId: Int
         timeRegistered: String
+    }
+
+    type Login {
+        name: String
+        email: String
+        role: String
+        token: String
     }
 
 `;
