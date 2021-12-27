@@ -9,7 +9,7 @@ export default gql`
         """
         createUser(
             """
-            User name.
+            User name, only first and last name.
             """
             name: String!
             """

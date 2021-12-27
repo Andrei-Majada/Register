@@ -11,7 +11,7 @@ export default gql`
         """
         id: ID
         """
-        User name.
+        User name, only first and last name.
         """
         name: String
         """
@@ -49,7 +49,7 @@ export default gql`
         """
         userId: Int
         """
-        User name from employee.
+        User name from employee, only first and last name.
         """
         username: String
         """
@@ -63,7 +63,7 @@ export default gql`
     """
     type Login {
         """
-        User name.
+        User name, only first and last name.
         """
         name: String
         """
