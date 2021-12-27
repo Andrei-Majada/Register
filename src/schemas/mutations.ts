@@ -14,5 +14,10 @@ export default gql`
         createRegister(
             timeRegistered: String!
         ): RegisteredTime
+
+        login(
+            email: String
+            password: String
+        ): Login
     }
 `;

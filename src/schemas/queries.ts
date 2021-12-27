@@ -6,11 +6,6 @@ export default gql`
 
         hello: Boolean
 
-        login(
-            email: String
-            password: String
-        ): Login
-
         listAdminRegister: [RegisteredTime]
 
         listEmployeeRegister: [RegisteredTime]

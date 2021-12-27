@@ -15,6 +15,7 @@ export default gql`
     type RegisteredTime {
         id: ID
         userId: Int
+        username: String
         timeRegistered: String
     }
 

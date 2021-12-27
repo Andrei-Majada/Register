@@ -18,11 +18,11 @@ export default {
     hello: () => helloResolver(),
     listAdminRegister: (parent: unknown, args: unknown, context: ContextI) => registerResolvers.adminlist(context),
     listEmployeeRegister: (parent: unknown, args: unknown, context: ContextI) => registerResolvers.employeeList(context),
-    login: (parent: unknown, args: LoginI) => userResolvers.login(args),
   },
 
   Mutation: {
     createUser: (parent: unknown, args: UserI) => userResolvers.create(args),
     createRegister: (parent: unknown, args: RegisterI, context: ContextI) => registerResolvers.create(args, context),
+    login: (parent: unknown, args: LoginI) => userResolvers.login(args),
   }
 }

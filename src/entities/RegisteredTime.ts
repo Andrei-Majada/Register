@@ -13,8 +13,12 @@ export class RegisteredTime extends BaseEntity{
   @Column()
   userId!: number;
 
+  @Field(() => String)
+  @Column()
+  username!: string;
+
   @Field()
-  @Column({ type: 'timestamp' })
+  @Column()
   timeRegistered!: string
 
   @ManyToOne(type => User, user => user.id)
