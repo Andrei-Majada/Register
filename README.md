@@ -43,7 +43,7 @@ e depois:
 ```bash
 npm run dev
 ```
-	> As informações de conexão com o banco já constam na aplicação.
+As informações de conexão com o banco já constam na aplicação.
 
 ## Documentação
 A API está documentada através dos schemas, que tambem pode ser visualizada através do Apollo-Studio, basta ir no seu navegador e colocar:
