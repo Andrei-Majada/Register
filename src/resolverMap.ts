@@ -2,7 +2,6 @@ import { Request } from 'express';
 
 import userResolvers from './resolvers/userResolvers';
 import registerResolvers from './resolvers/registerResolvers';
-import helloResolver from './resolvers/helloResolver';
 
 import { UserI } from './resolvers/userResolvers/create';
 import { RegisterI } from './resolvers/registerResolvers/create';
@@ -15,7 +14,6 @@ interface ContextI {
 export default {
 
   Query: {
-    hello: () => helloResolver(),
     listAdminRegister: (parent: unknown, args: unknown, context: ContextI) => registerResolvers.adminlist(context),
     listEmployeeRegister: (parent: unknown, args: unknown, context: ContextI) => registerResolvers.employeeList(context),
   },
